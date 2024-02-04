@@ -37,7 +37,7 @@ body{
 }
 
 .view-cust{
-    display: block;
+    display: none;
     width: 100vw;
     height: 100vh;
 }
@@ -83,6 +83,7 @@ th{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .actions{
@@ -104,6 +105,7 @@ h1{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .addCustomer-form{
@@ -111,19 +113,49 @@ h1{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 30%;
-    height: 30%;
+    width: 40%;
+    height: fit-content;
     gap: 10px;
     color: black;
     border: 1px solid black;
+    margin-inline: auto;
+    margin-top: 25px;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 10px 20px;
+    display: none;
 }
 .addCustomer-form>div{
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
 .addCustomer-form>div>div{
+    width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.addCustomer-form>div>div>input{
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px;
+    outline: none;
+}
+
+.addCustomer-form>button{
+    width: 90%;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(101, 255, 204);
+    font-weight: 600;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.editCustomer-form{
+    display: none;
 }

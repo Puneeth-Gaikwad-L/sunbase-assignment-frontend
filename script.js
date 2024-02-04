@@ -81,6 +81,20 @@ function getCustomers(pageNo, rowsCount, sortBy) {
 const table = document.getElementById("customer-table");
 
 function addCustomersToTable(customers) {
+    table.innerHTML = '';
+    const tableHead = document.createElement("tr");
+    tableHead.innerHTML = `
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Actions</th>`
+
+    table.appendChild(tableHead);
+
     customers.forEach(element => {
         console.log(element);
 
@@ -94,14 +108,18 @@ function addCustomersToTable(customers) {
         <td>${element.phone}</td>
         <td>
             <div class="actions">
-                <button onclick="deleteCust(event)" data-email= ${element.email} class="del-btn"><i class="fa-solid fa-trash"></i></button>
-                <button data-email= ${element.email} class="edit-btn"><i class="fas fa-edit"></i></button>
+                <button onclick="deleteCust(this)" data-email= ${element.email} class="del-btn"><i class="fa-solid fa-trash"></i></button>
+                <button onclick="editRow(this)" data-email= ${element.email} class="edit-btn"><i class="fas fa-edit"></i></button>
             </div>
         </td>`
 
         table.appendChild(tr);
 
     });
+}
+
+function displayAddcustomerForm() {
+    document.getElementById("addCustomer-form").style.display = "flex";
 }
 
 
@@ -132,7 +150,6 @@ addCustomerForm.addEventListener("submit", (e) => {
     console.log(formData);
     const authToken = localStorage.getItem('jwtToken');
 
-    // Replace 'http://localhost:8080/customer/create' with the actual API endpoint
     const apiUrl = 'http://localhost:8080/customer/create';
 
 
@@ -152,18 +169,22 @@ addCustomerForm.addEventListener("submit", (e) => {
         .then(data => {
             // Handle the data from the response
             console.log('Response data:', data);
+            getCustomers(1, 5, "firstName");
         })
         .catch(error => {
             // Handle errors during the fetch operation
             console.error('Error:', error);
         });
 
+    addCustomerForm.reset()
+    addCustomerForm.style.display = 'none';
+
 })
 
 function deleteCust(event) {
 
-    const email = event.target.getAttribute("data-email");
-    console.log(email);
+    const email = event.getAttribute("data-email");
+    console.log(event.getAttribute("data-email"));
 
     const authToken = localStorage.getItem('jwtToken');
 
@@ -177,6 +198,7 @@ function deleteCust(event) {
         }
     })
         .then(response => {
+            getCustomers(1, 5, "firstName");
             return response.json(); // Parse the JSON from the response
         })
         .then(data => {
@@ -189,6 +211,14 @@ function deleteCust(event) {
         });
 }
 
+let selectElement = document.getElementById("selectField")
+selectElement.addEventListener("change", function () {
+    // Get the selected value
+    let selectedValue = selectElement.value;
+    getCustomers(1, 5, selectedValue);
+    // Do something with the selected value
+    console.log("Selected value: " + selectedValue);
+});
 const syncBtn = document.getElementById("sync-btn");
 syncBtn.addEventListener("click", async () => {
     console.log("sync");
@@ -196,73 +226,80 @@ syncBtn.addEventListener("click", async () => {
     await getCustomerList();
 })
 
-async function hitAuthenticationAPI() {
-    const apiUrl = 'https://qa.sunbasedata.com/sunbase/portal/api/assignment_auth.jsp';
+const editCustomerForm = document.getElementById("editCustomer-form");
 
-    // Data to be sent in the request body
-    const requestBody = {
-        login_id: 'test@sunbasedata.com',
-        password: 'Test@123'
-    };
+function editRow(btn) {
+    editCustomerForm.style.display = "flex";
+    const row = btn.parentNode.parentNode.parentNode;
+    console.log(row);
+    const firstName = row.cells[0].innerText;
+    const lastName = row.cells[1].innerText;
+    const address = row.cells[2].innerText;
+    const city = row.cells[3].innerText;
+    const state = row.cells[4].innerText;
+    const email = row.cells[5].innerText;
+    const personToupdate = row.cells[5].innerHTML
+    const phone = row.cells[6].innerText;
 
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-        });
+    console.log(firstName, lastName, address, city, state, email, phone);
 
-        // Parse the JSON from the response
-        const responseData = await response.json();
+    document.getElementById("editfirstName").value = firstName;
+    document.getElementById("editlastName").value = lastName;
+    document.getElementById("editaddress").value = address;
+    document.getElementById("editcity").value = city;
+    document.getElementById("editState").value = state;
+    document.getElementById("editemail").value = email;
+    document.getElementById("editphone").value = phone;
 
-        // Handle the data from the response
-        localStorage.setItem('accessToken',responseData.access_token)
-        console.log('Response data:', responseData.access_token);
+    editCustomerForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        console.log("submitted");
+        const firstName = document.getElementById("editfirstName").value;
+        const lastName = document.getElementById("editlastName").value;
+        const address = document.getElementById("editaddress").value;
+        const city = document.getElementById("editcity").value;
+        const state = document.getElementById("editState").value;
+        const email = document.getElementById("editemail").value;
+        const phone = document.getElementById("editphone").value;
 
-        // You can return the response data or perform other actions as needed
-        return responseData;
-    } catch (error) {
-        // Handle errors during the fetch operation
-        console.error('Error:', error);
+        const formData = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "address": address,
+            "city": city,
+            "state": state,
+            "email": email,
+            "phone": phone,
+        };
 
-        // You can throw the error or handle it in a different way based on your requirements
-        throw error;
-    }
-}
-
-async function getCustomerList() {
-    const apiUrl = 'https://qa.sunbasedata.com/sunbase/portal/api/assignment.jsp';
-    const accessToken = localStorage.getItem("accessToken");
-
-    // Data to be sent in the request body
-    const requestBody = {
-        login_id: 'test@sunbasedata.com',
-        password: 'Test@123'
-    };
-
-    try {
-        const response = await fetch(`${apiUrl}?cmd=get_customer_list`, {
-            method: 'GET',
+        const authToken = localStorage.getItem('jwtToken');
+        const apiUrl = `http://localhost:8080/customer/update/${personToupdate}`;
+        fetch(apiUrl, {
+            method: 'PUT',
             headers: {
-            'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
             },
-        });
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
 
-        // Parse the JSON from the response
-        const responseData = await response.json();
 
-        // Handle the data from the response
-        console.log('Response data:', responseData);
+                document.getElementById("editCustomer-form").style.display = "none";
 
-        // You can return the response data or perform other actions as needed
-        return responseData;
-    } catch (error) {
-        // Handle errors during the fetch operation
-        console.error('Error:', error);
+                getCustomers(1, 5, "firstName");
+            })
+            .catch(error => {
 
-        // You can throw the error or handle it in a different way based on your requirements
-        throw error;
-    }
+                console.error('Error:', error);
+            });
+    });
+
+
 }
 
 

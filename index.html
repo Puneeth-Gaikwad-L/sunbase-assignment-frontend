@@ -28,9 +28,9 @@
         <section id="view-cust" class="view-cust">
             <h1>Customer List</h1>
             <div>
-                <button onclick="addCustomer()" class="btn">Add Customer</button>
-                <select name="" id="">
-                    <option value="">Select</option>
+                <button onclick="displayAddcustomerForm()" class="btn">Add Customer</button>
+                <label for="selectField">Sort By</label>
+                <select name="" id="selectField">
                     <option value="firstName">firstName</option>
                     <option value="City">City</option>
                     <option value="Email">Email</option>
@@ -43,20 +43,12 @@
 
             <div class="table">
                 <table id="customer-table">
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
+                    
                 </table>
             </div>
 
             <form id="addCustomer-form" class="addCustomer-form">
+                <h1 id="form-heading">Add Customer</h1>
                 <div>
                     <div>
                         <label for="firstName">First Name:</label>
@@ -97,7 +89,48 @@
                         <input id="phone" type="text" placeholder="phone">
                     </div>
                 </div>
-                <button type="submit">submit</button>
+                <button type="submit">Submit</button>
+            </form>
+
+            <form id="editCustomer-form" class="addCustomer-form editCustomer-form">
+                <h1 id="form-heading">Edit Customer</h1>
+                <div>
+                    <div>
+                        <label for="editfirstName">First Name:</label>
+                        <input id="editfirstName" type="text" placeholder="Puneeth">
+                    </div>
+                    <div>
+                        <label for="editlastName">Last Name:</label>
+                        <input id="editlastName" type="text" placeholder="Gaikwad">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="editaddress">address</label>
+                        <input id="editaddress" type="text" placeholder="address">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="editcity">city:</label>
+                        <input id="editcity" type="text" placeholder="city">
+                    </div>
+                    <div>
+                        <label for="editState">State:</label>
+                        <input id="editState" type="text" placeholder="State">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="editemail">email</label>
+                        <input id="editemail" type="email" placeholder="email">
+                    </div>
+                    <div>
+                        <label for="editphone">phone</label>
+                        <input id="editphone" type="text" placeholder="phone">
+                    </div>
+                </div>
+                <button type="submit">Submit</button>
             </form>
         </section>
     </main>
