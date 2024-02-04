@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.login-Screen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+.login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+    gap: 10px;
+    color: #fff;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+.login-form>input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.view-cust{
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table{
+    width: 95%;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-inline: auto;
+}
+
+td{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+th{
+    text-align: start;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.btn{
+    padding: 5px 15px;
+    border: none;
+    background-color: blueviolet;
+    border-radius: 10px;
+}
+
+.del-btn{
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+h1{
+    text-align: center;
+}
+
+.edit-btn{
+    height: 25px;
+    width: 25px;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addCustomer-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 30%;
+    height: 30%;
+    gap: 10px;
+    color: black;
+    border: 1px solid black;
+}
+.addCustomer-form>div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.addCustomer-form>div>div{
+    display: flex;
+    flex-direction: column;
+}
