@@ -153,7 +153,6 @@ addCustomerForm.addEventListener("submit", (e) => {
     const apiUrl = 'http://localhost:8080/customer/create';
 
 
-    // Make the POST request using fetch
     fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -163,8 +162,7 @@ addCustomerForm.addEventListener("submit", (e) => {
         body: JSON.stringify(formData)
     })
         .then(response => {
-            // Check if the response status is in the success range (200-299)
-            return response.json(); // Parse the JSON from the response
+            return response.json(); 
         })
         .then(data => {
             // Handle the data from the response
@@ -172,7 +170,6 @@ addCustomerForm.addEventListener("submit", (e) => {
             getCustomers(1, 5, "firstName");
         })
         .catch(error => {
-            // Handle errors during the fetch operation
             console.error('Error:', error);
         });
 
@@ -219,12 +216,7 @@ selectElement.addEventListener("change", function () {
     // Do something with the selected value
     console.log("Selected value: " + selectedValue);
 });
-const syncBtn = document.getElementById("sync-btn");
-syncBtn.addEventListener("click", async () => {
-    console.log("sync");
-    await hitAuthenticationAPI();
-    await getCustomerList();
-})
+
 
 const editCustomerForm = document.getElementById("editCustomer-form");
 
@@ -335,6 +327,7 @@ function search() {
 }
 
 function syncDB() {
+    let customersSync = [];
     const apiUrl = `http://localhost:8080/customer/syncDB`
 
     const authToken = localStorage.getItem("jwtToken");
@@ -354,11 +347,56 @@ function syncDB() {
         .then(data => {
             // Handle the data from the response
             console.log('Response data:', data);
-            addCustomersToTable(data);
+            data.forEach(customer => {
+                formData = {
+                    "firstName": customer.first_name,
+                    "lastName": customer.last_name,
+                    "street": customer.street,
+                    "address": customer.address,
+                    "city": customer.city,
+                    "state": customer.state,
+                    "email": customer.email,
+                    "phone": customer.phone,
+                }
+                customersSync.push(formData);
+            })
+            console.log(customersSync);
+            
+            customersSync.forEach(customer => {
+                const authToken = localStorage.getItem('jwtToken');
+
+                const apiUrl = 'http://localhost:8080/customer/create';
+            
+            
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(customer)
+                })
+                    .then(response => {
+                        return response.json(); 
+                    })
+                    .then(data => {
+                        // Handle the data from the response
+                        console.log('Response data:', data);
+                        getCustomers(1, 5, "firstName");
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            })
+            
         })
         .catch(error => {
             // Handle errors during the fetch operation
             console.error('Error:', error);
         });
+    
+        
+    
+    
 }
 
