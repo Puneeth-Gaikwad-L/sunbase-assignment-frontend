@@ -38,7 +38,7 @@ logInForm.addEventListener("submit", function (e) {
             getCustomers(1, 5, "firstName");
         })
         .catch(error => {
-            // Handle errors 
+            // Handle errors
             console.error('Error:', error);
         });
 
@@ -302,4 +302,35 @@ function editRow(btn) {
 
 }
 
+function search() {
+    let searchValue = document.getElementById("searchBar").value;
+    let selectedValue = searchFeild.value;
+    console.log(searchValue);
+
+    const apiUrl = `http://localhost:8080/customer/searchBy?searchBy=${selectedValue}&searchQuery=${searchValue}`
+
+    const authToken = localStorage.getItem("jwtToken");
+
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+        }
+    })
+        .then(response => {
+            // Checking if the response status is in the success range (200-299)
+
+            return response.json(); // Parse the JSON from the response
+        })
+        .then(data => {
+            // Handle the data from the response
+            console.log('Response data:', data);
+            addCustomersToTable(data);
+        })
+        .catch(error => {
+            // Handle errors during the fetch operation
+            console.error('Error:', error);
+        });
+}
 

@@ -27,7 +27,7 @@
     <main>
         <section id="view-cust" class="view-cust">
             <h1>Customer List</h1>
-            <div>
+            <div class="btn-conntainer">
                 <button onclick="displayAddcustomerForm()" class="btn">Add Customer</button>
                 <label for="selectField">Sort By</label>
                 <select name="" id="selectField">
@@ -36,14 +36,24 @@
                     <option value="Email">Email</option>
                     <option value="Phone">Phone</option>
                 </select>
-                <input type="text">
+                <label for="selectField">Search By</label>
+                <select name="" id="searchFeild">
+                    <option value="firstName">firstName</option>
+                    <option value="City">City</option>
+                    <option value="Email">Email</option>
+                    <option value="Phone">Phone</option>
+                </select>
+                <div>
+                    <input id="searchBar" type="text" placeholder="search">
+                    <button class="btn" onclick="search()">Search</button>
+                </div>
                 <button id="sync-btn" class="btn">Sync</button>
             </div>
 
 
             <div class="table">
                 <table id="customer-table">
-                    
+
                 </table>
             </div>
 

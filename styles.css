@@ -67,10 +67,14 @@ th{
 }
 
 .btn{
-    padding: 5px 15px;
+    padding: 9px 15px;
     border: none;
     background-color: blueviolet;
     border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid blueviolet;
 }
 
 .del-btn{
@@ -158,4 +162,14 @@ h1{
 
 .editCustomer-form{
     display: none;
+}
+
+.btn-conntainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 25px;
+    overflow: hidden;
 }
