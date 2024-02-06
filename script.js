@@ -150,7 +150,7 @@ addCustomerForm.addEventListener("submit", (e) => {
     console.log(formData);
     const authToken = localStorage.getItem('jwtToken');
 
-    const apiUrl = 'http://localhost:8080/customer/create';
+    const apiUrl = 'http://localhost:8080/customer/create?SyncDb=false';
 
 
     fetch(apiUrl, {
@@ -365,7 +365,7 @@ function syncDB() {
             customersSync.forEach(customer => {
                 const authToken = localStorage.getItem('jwtToken');
 
-                const apiUrl = 'http://localhost:8080/customer/create';
+                const apiUrl = 'http://localhost:8080/customer/create?SyncDb=true';
             
             
                 fetch(apiUrl, {
